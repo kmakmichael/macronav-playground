@@ -28,15 +28,21 @@ def build_graph():
 
 
 def draw_graph(g):
-    subax1 = plt.subplot(121)
+    #subax1 = plt.subplot(121)
     nx.draw(g, with_labels=True, font_weight='bold')
-    subax2 = plt.subplot(122)
+    #subax2 = plt.subplot(122)
     nx.draw_shell(g, with_labels=True, font_weight='bold')
     plt.show()
 
 
 if __name__ == '__main__':
-    map = build_graph()
-    draw_graph(map)
+    campus_map = build_graph()
+    # draw_graph(campus_map)
+    print(nx.shortest_path(campus_map, 7, 12, 'weight'))
+    print(nx.shortest_path(campus_map, 0, 10, 'weight'))
+    print(nx.shortest_path(campus_map, 2, 11, 'weight'))
+    print(nx.shortest_path(campus_map, 0, 6, 'weight'))
+    print(nx.shortest_path(campus_map, 1, 9, 'weight'))
+    print(nx.shortest_path(campus_map, 12, 11, 'weight'))
 
 

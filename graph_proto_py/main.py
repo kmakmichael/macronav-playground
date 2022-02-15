@@ -1,48 +1,49 @@
+import csv
+
 import networkx as nx
 import matplotlib.pyplot as plt
+import matplotlib.lines as lines
 
 
-edges = [
-    (0, 1, {'weight': 60}),
-    (0, 3, {'weight': 1}),
-    (0, 4, {'weight': 1}),
-    (0, 6, {'weight': 60}),
-    (1, 2, {'weight': 2}),
-    (1, 7, {'weight': 5}),
-    (2, 3, {'weight': 2}),
-    (2, 8, {'weight': 5}),
-    (3, 9, {'weight': 5}),
-    (4, 5, {'weight': 2}),
-    (4, 10, {'weight': 5}),
-    (5, 6, {'weight': 2}),
-    (5, 11, {'weight': 5}),
-    (6, 12, {'weight': 5})
-]
+def load_nodes(g, csv_file):
+    with open(csv_file, newline='') as f:
+        reader = csv.DictReader(f, delimiter=',')
+        for row in reader:
+            g.add_nodes_from([(row['name'], {"lat": row['lat'], "lng": row['lng']})])
 
 
-def build_graph():
-    g = nx.Graph()
-    g.add_nodes_from(range(12))
-    g.add_edges_from(edges)
-    return g
+def load_edges(g, csv_file):
+    with open(csv_file, newline='') as f:
+        reader = csv.DictReader(f, delimiter=',')
+        for row in reader:
+            g.add_edge(row['a'], row['b'])
 
 
 def draw_graph(g):
-    #subax1 = plt.subplot(121)
-    nx.draw(g, with_labels=True, font_weight='bold')
-    #subax2 = plt.subplot(122)
-    nx.draw_shell(g, with_labels=True, font_weight='bold')
+    # draw nodes
+    fig = plt.figure()
+    for n in list(g.nodes):
+        plt.scatter(float(g.nodes[n]['lng']), float(g.nodes[n]['lat']), color='blue')
+
+    # draw lines
+    for e in list(g.edges):
+        x = [float(g.nodes[e[0]]['lng']), float(g.nodes[e[1]]['lng'])]
+        y = [float(g.nodes[e[0]]['lat']), float(g.nodes[e[1]]['lat'])]
+        plt.plot(x, y, color='blue')
+
     plt.show()
 
 
 if __name__ == '__main__':
-    campus_map = build_graph()
-    # draw_graph(campus_map)
-    print(nx.shortest_path(campus_map, 7, 12, 'weight'))
-    print(nx.shortest_path(campus_map, 0, 10, 'weight'))
-    print(nx.shortest_path(campus_map, 2, 11, 'weight'))
-    print(nx.shortest_path(campus_map, 0, 6, 'weight'))
-    print(nx.shortest_path(campus_map, 1, 9, 'weight'))
-    print(nx.shortest_path(campus_map, 12, 11, 'weight'))
+    campus_map = nx.Graph()
+    load_nodes(campus_map, "nodes.csv")
+    load_edges(campus_map, "edges.csv")
+    draw_graph(campus_map)
+    print(nx.shortest_path(campus_map, 'uc', 'classroom'))
+    print(nx.shortest_path(campus_map, 'baunfit', 'library'))
+    print(nx.shortest_path(campus_map, 'mailroom', 'classroom_alt'))
+    print(nx.shortest_path(campus_map, 'chambers', 'uc_fountain'))
+    print(nx.shortest_path(campus_map, 'engcy_finance', 'baxter_clocktower'))
+
 
 

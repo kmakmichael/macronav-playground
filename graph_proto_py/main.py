@@ -1,8 +1,7 @@
 import csv
-
+import sys
 import networkx as nx
 import matplotlib.pyplot as plt
-import matplotlib.lines as lines
 
 
 def load_nodes(g, csv_file):
@@ -38,12 +37,7 @@ if __name__ == '__main__':
     campus_map = nx.Graph()
     load_nodes(campus_map, "nodes.csv")
     load_edges(campus_map, "edges.csv")
-    draw_graph(campus_map)
-    print(nx.shortest_path(campus_map, 'uc', 'classroom'))
-    print(nx.shortest_path(campus_map, 'baunfit', 'library'))
-    print(nx.shortest_path(campus_map, 'mailroom', 'classroom_alt'))
-    print(nx.shortest_path(campus_map, 'chambers', 'uc_fountain'))
-    print(nx.shortest_path(campus_map, 'engcy_finance', 'baxter_clocktower'))
-
+    # draw_graph(campus_map)
+    print(nx.shortest_path(campus_map, sys.argv[1], sys.argv[2]))
 
 

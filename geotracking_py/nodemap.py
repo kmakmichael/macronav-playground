@@ -18,7 +18,7 @@ def load_edges(g, csv_file):
             g.add_edge(row['a'], row['b'])
 
 
-def draw_graph(g, pt=(181, 91)):
+def draw_graph(g, pt=()):
     matplotlib.use('qtagg')
     # draw nodes
     fig, ax = plt.subplots()
@@ -33,7 +33,8 @@ def draw_graph(g, pt=(181, 91)):
         y = [float(g.nodes[e[0]]['lat']), float(g.nodes[e[1]]['lat'])]
         plt.plot(x, y, color='blue')
 
-    if pt != (181, 91):
+    if pt != ():
+        print(pt)
         plt.scatter(float(pt[0]), float(pt[1]), color='red')
 
     plt.show()

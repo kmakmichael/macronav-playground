@@ -14,8 +14,8 @@ if __name__ == '__main__':
     print(f'loaded map in {nodeload-begin} seconds')
 
     # get coords
-    # coords = msgparse.get_coords()
-    coords = (-121.313960, 37.981323)
+    coords = msgparse.get_coords()
+    # coords = (-121.313960, 37.981323)
 
     # draw the map
     drawstart = time.perf_counter()

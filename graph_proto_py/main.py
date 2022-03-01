@@ -37,7 +37,7 @@ if __name__ == '__main__':
     campus_map = nx.Graph()
     load_nodes(campus_map, "nodes.csv")
     load_edges(campus_map, "edges.csv")
-    # draw_graph(campus_map)
+    draw_graph(campus_map)
     print(nx.shortest_path(campus_map, sys.argv[1], sys.argv[2]))
 
 

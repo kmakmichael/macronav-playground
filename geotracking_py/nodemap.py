@@ -1,5 +1,6 @@
 import csv
 import networkx as nx
+import matplotlib
 import matplotlib.pyplot as plt
 
 
@@ -18,8 +19,11 @@ def load_edges(g, csv_file):
 
 
 def draw_graph(g, pt=(181, 91)):
+    matplotlib.use('qtagg')
     # draw nodes
-    fig = plt.figure()
+    fig, ax = plt.subplots()
+    img = plt.imread("mapdata/gmap.png")
+    ax.imshow(img, extent=[-121.3184, -121.3064, 37.9744, 37.9855])
     for n in list(g.nodes):
         plt.scatter(float(g.nodes[n]['lng']), float(g.nodes[n]['lat']), color='blue')
 

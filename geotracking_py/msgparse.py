@@ -20,3 +20,25 @@ def get_coords():
             print(f'Parse error: {e}')
     return () # (181, 91)
 
+
+def get_route(): 
+    coords = ([], [])
+    ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
+    while True:
+        try:
+            msg = pynmea2.parse(ser.readline().decode("ascii"))
+            if isinstance(msg, pynmea2.types.talker.RMC):
+                if msg.status == 'V':
+                    print('No fix, discarding message')
+                else:
+                    coords[0].append(msg.longitude)
+                    coords[1].append(msg.latitude)
+        except serial.SerialException as e:
+            print(f'Device error: {e}')
+            break
+        except pynmea2.ParseError as e:
+            print(f'Parse error: {e}')
+        except KeyboardInterrupt as e:
+            print(f'interrupting after {len(coords)} points')
+            return coords
+    return () # (181, 91)

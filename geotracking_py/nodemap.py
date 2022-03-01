@@ -35,7 +35,7 @@ def draw_graph(g, pt=()):
 
     if pt != ():
         print(pt)
-        plt.scatter(float(pt[0]), float(pt[1]), color='red')
+        plt.plot(pt[0], pt[1], color='red')
 
     plt.show()
 

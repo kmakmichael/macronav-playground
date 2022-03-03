@@ -18,7 +18,7 @@ def get_coords():
             break
         except pynmea2.ParseError as e:
             print(f'Parse error: {e}')
-    return () # (181, 91)
+    return ()  # (181, 91)
 
 
 def get_route(): 

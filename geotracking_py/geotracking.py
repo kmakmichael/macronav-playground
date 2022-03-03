@@ -13,8 +13,8 @@ def cgrab(i):
     nc = msgparse.get_coords()
     if nc != ():
         coords.append(nc)
-        ax.cla()
-        ax.plot(coords(0), coords(1), color='red')
+        pax.cla()
+        pax.plot(coords(0), coords(1), color='red')
 
 
 if __name__ == '__main__':
@@ -42,10 +42,9 @@ if __name__ == '__main__':
         x = [float(campus_map.nodes[e[0]]['lng']), float(campus_map.nodes[e[1]]['lng'])]
         y = [float(campus_map.nodes[e[0]]['lat']), float(campus_map.nodes[e[1]]['lat'])]
         plt.plot(x, y, color='blue')
-    ani = FuncAnimation(fig, cgrab, interval=1000)
+    pax = fig.add_axes(ax.get_position(), frameon=False)
+    ani = FuncAnimation(fig, cgrab, interval=1)
     plt.show()
-
-
 
 
     # coords = msgparse.get_route()

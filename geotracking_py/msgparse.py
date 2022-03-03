@@ -9,7 +9,7 @@ def get_coords():
             msg = pynmea2.parse(ser.readline().decode("ascii"))
             if isinstance(msg, pynmea2.types.talker.RMC):
                 if msg.status == 'V':
-                    print('No fix, discarding message')
+                    continue
                 else:
                     coords = (msg.longitude, msg.latitude)
                     return coords
@@ -28,9 +28,8 @@ def get_route():
         try:
             msg = pynmea2.parse(ser.readline().decode("ascii"))
             if isinstance(msg, pynmea2.types.talker.RMC):
-                if msg.status == 'V':
-                    print('No fix, discarding message')
-                else:
+                if msg.status != 'V':
+                    # print(f'recording ({msg.longitude}, {msg.latitude})')
                     coords[0].append(msg.longitude)
                     coords[1].append(msg.latitude)
         except serial.SerialException as e:
@@ -41,4 +40,6 @@ def get_route():
         except KeyboardInterrupt as e:
             print(f'interrupting after {len(coords)} points')
             return coords
-    return () # (181, 91)
+        except UnicodeDecodeError as e:
+            print(f'Decode error: {e}')
+    return coords

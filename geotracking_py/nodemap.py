@@ -34,7 +34,6 @@ def draw_graph(g, pt=()):
         plt.plot(x, y, color='blue')
 
     if pt != ():
-        print(pt)
         plt.plot(pt[0], pt[1], color='red')
 
     plt.show()

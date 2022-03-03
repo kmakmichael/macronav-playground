@@ -14,10 +14,10 @@ if __name__ == '__main__':
     print(f'loaded map in {nodeload-begin} seconds')
 
     # get coords
-    # coords = msgparse.get_route()
+    coords = msgparse.get_route()
     # coords = (-121.313960, 37.981323)
     # chambers_alt, library, classroom_olson
-    coords = ([
+    '''coords = ([
         -121.311247,
         -121.309482,
         -121.311729
@@ -26,6 +26,7 @@ if __name__ == '__main__':
         37.980006,
         37.976124
         ])
+    '''
 
     # draw the map
     drawstart = time.perf_counter()

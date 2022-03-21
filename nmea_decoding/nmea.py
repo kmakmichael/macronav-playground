@@ -12,20 +12,20 @@ def datapr(msg):
         print('RMC:')
         print(f'\tLat / Long\t{msg.latitude} / {msg.longitude}')
         print(f'\tMode: {msg.mode}')
-    if isinstance(msg, tk.GSA):
-        print('GSA: ')
+    elif isinstance(msg, tk.GSA):
+        print('GSA:')
         print(f'\tPDOP: {msg.pdop}')
         print(f'\tHDOP: {msg.hdop}')
         print(f'\tVDOP: {msg.vdop}')
-    if isinstance(msg, tk.GGA):
-        print(f'GGA: ')
+    elif isinstance(msg, tk.GGA):
+        print('GGA:')
         print(f'\tHDOP: {msg.horizontal_dil}')
         print(f'\tFix: {msg.gps_qual}')
         print(f'\tSats: {msg.num_sats}')
         print(f'\tMode: {msg.mode}')
         print(f'\tMode Type: {msg.mode_fix_type}')
-    if isinstance(msg, tk.VTG):
-        print(f'VTG: ')
+    elif isinstance(msg, tk.VTG):
+        print('VTG:')
         print(f'\tHeading: {msg.true_track}{msg.true_track_sym}')
         print(f'\tSpeed: {msg.spd_over_grnd_kmph}{msg.spd_over_grnd_kmph_sym}')
         print(f'\tMode: {msg.faa_mode}')

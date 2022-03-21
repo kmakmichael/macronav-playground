@@ -7,6 +7,7 @@ def track(lat, long):
     print(f'location: {lat}, {long}')
 
 
+
 def datapr(msg):
     if isinstance(msg, tk.RMC):
         print('RMC:')
@@ -14,6 +15,8 @@ def datapr(msg):
         print(f'\tMode: {msg.mode}')
     elif isinstance(msg, tk.GSA):
         print('GSA:')
+        print(f'\tMode: {msg.mode}')
+        print(f'\tMode Type: {msg.mode_fix_type}')
         print(f'\tPDOP: {msg.pdop}')
         print(f'\tHDOP: {msg.hdop}')
         print(f'\tVDOP: {msg.vdop}')
@@ -22,8 +25,6 @@ def datapr(msg):
         print(f'\tHDOP: {msg.horizontal_dil}')
         print(f'\tFix: {msg.gps_qual}')
         print(f'\tSats: {msg.num_sats}')
-        print(f'\tMode: {msg.mode}')
-        print(f'\tMode Type: {msg.mode_fix_type}')
     elif isinstance(msg, tk.VTG):
         print('VTG:')
         print(f'\tHeading: {msg.true_track}{msg.true_track_sym}')
@@ -33,10 +34,15 @@ def datapr(msg):
 
 if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
+    fix = False
     while True:
         try:
             msg = pynmea2.parse(ser.readline().decode("ascii"))
-            datapr(msg)
+            if fix:
+                datapr(msg)
+            else:
+                if isinstance(msg, tk.RMC):
+                    fix = (msg.status != 'V')
         except serial.SerialException as e:
             print(f'Device error: {e}')
             break
